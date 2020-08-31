@@ -6,7 +6,8 @@ import org.junit.runner.RunWith;
 
 @RunWith(Cucumber.class)
 @CucumberOptions(
-        features = "src/Cucumber/Features/google-text-search.feature",
+        //features = "src/Cucumber/Features/google-text-search.feature",
+        features = "src/Cucumber/Features/",
         plugin = {"pretty", "html:out"}
 )
 public class GoogleSearchTest {

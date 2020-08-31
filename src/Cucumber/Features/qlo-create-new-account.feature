@@ -1,3 +1,4 @@
+@quick
 Feature: Account creation
   Scenario Outline: : Create an account
 

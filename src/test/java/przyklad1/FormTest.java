@@ -7,6 +7,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.Select;
+import static org.junit.Assert.*;
 
 import java.util.List;
 
@@ -33,7 +34,11 @@ public class FormTest {
         String name = "Karolina";
         if (firstNameTextBox.isEnabled()) {
             firstNameTextBox.sendKeys(name);
-            System.out.println(firstNameHeader.getText() + " : " + name);
+            System.out.println(firstNameHeader.getText() + " : " + firstNameTextBox.getAttribute("value"));
+            assertEquals(name, firstNameTextBox.getAttribute("value"));
+        }
+        else {
+            fail("firstNameTextBox is not enabled");
         }
 
         final WebElement lastNameTextBox = driver.findElement(By.id("last-name"));
@@ -41,7 +46,11 @@ public class FormTest {
         String lastName = "Kowalski";
         if (lastNameTextBox.isDisplayed()) {
             lastNameTextBox.sendKeys(lastName);
-            System.out.println(lastNameHeader.getText() + " : " + lastName);
+            System.out.println(lastNameHeader.getText() + " : " + lastNameTextBox.getAttribute("value"));
+            assertEquals(lastName, lastNameTextBox.getAttribute("value"));
+        }
+        else {
+            fail("lastNameTextBox is not enabled");
         }
 
         // Wybieranie gender - rozwiazania:
@@ -67,6 +76,9 @@ public class FormTest {
         if (radioButtonFemale.isEnabled()) {
             radioButtonFemale.click();
             System.out.println(genderHeader.getText() + " : " + radioButtonFemale.getText()); //dla radio button pusty text
+            assertTrue(radioButtonFemale.isSelected());
+            WebElement femaleRadioLabel = driver.findElement(By.xpath("//label[text()='Female']/input[@name='gender']/.."));
+            assertEquals("Female", femaleRadioLabel.getText());
         }
         // Sprawdzanie czy radio button jest wybrany lub nie
         if (radioButtonFemale.isSelected()) {
@@ -93,13 +105,13 @@ public class FormTest {
 
     @Test
     public void formTestNoFirstName() {
-        final WebElement firstNameTextBox = driver.findElement(By.id("first-name"));
-        WebElement firstNameHeader = driver.findElement(By.cssSelector("[for='first-name']"));
-        String name = "Karolina";
-        if (firstNameTextBox.isEnabled()) {
-            firstNameTextBox.sendKeys(name);
-            System.out.println(firstNameHeader.getText() + " : " + name);
-        }
+//        final WebElement firstNameTextBox = driver.findElement(By.id("first-name"));
+//        WebElement firstNameHeader = driver.findElement(By.cssSelector("[for='first-name']"));
+//        String name = "Karolina";
+//        if (firstNameTextBox.isEnabled()) {
+//            firstNameTextBox.sendKeys(name);
+//            System.out.println(firstNameHeader.getText() + " : " + name);
+//        }
 
         final WebElement lastNameTextBox = driver.findElement(By.id("last-name"));
         WebElement lastNameHeader = driver.findElement(By.cssSelector("[for='last-name']"));
@@ -154,5 +166,11 @@ public class FormTest {
 
         Select roles = new Select(driver.findElement(By.id("role")));
         roles.selectByVisibleText("QA");
+
+        driver.findElement(By.id("submit")).click();
+
+        WebElement firstNameValidation = driver.findElement(By.id("first-name-error"));
+        assertEquals("This field is required.", firstNameValidation.getText());
+        assertTrue(firstNameValidation.isDisplayed());
     }
 }

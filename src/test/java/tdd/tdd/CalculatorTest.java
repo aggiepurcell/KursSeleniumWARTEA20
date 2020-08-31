@@ -11,7 +11,7 @@ public class CalculatorTest {
 
         int result = calculator.add(2 ,2);
 
-        Assert.assertEquals(4, result);
+        Assert.assertEquals("Blad: 4 nie rowna sie " + result,4, result);
     }
 
     @Test

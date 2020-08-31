@@ -1,5 +1,5 @@
+@quick
 Feature: Google search
-
   Scenario Outline: : user can search any keyword
 
     Given an open browser with google.com
@@ -10,4 +10,4 @@ Feature: Google search
     Examples:
     |keyword  |expectedWord   |
     |karol    |karol          |
-    #|jacek    |jacek          |
+    |jacek    |jacek          |
