@@ -1,5 +1,6 @@
 package mystore;
 
+import helpers.ScreenshotShooter;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -10,9 +11,12 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import pages.LoginPage;
 
+import java.util.concurrent.TimeUnit;
+
 public class MyStoreLoginTest {
 
     private WebDriver driver;
+    private ScreenshotShooter screenshotShooter = new ScreenshotShooter();
 
     @Before
     public void setUp() {
@@ -22,6 +26,7 @@ public class MyStoreLoginTest {
         driver = new ChromeDriver();
         // Zmaksymalizuj okno przeglądarki
         driver.manage().window().maximize();
+        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
         // Otworz strone sklepu my store
         driver.get("https://prod-kurs.coderslab.pl/index.php?controller=authentication&back=my-account");
     }
@@ -40,6 +45,7 @@ public class MyStoreLoginTest {
         // sprawdzenie, czy udalo sie zalogowac
         WebElement userFullNameLabel = driver.findElement(By.xpath("//*[@id=\"_desktop_user_info\"]//span"));
         Assert.assertEquals("John Doe", userFullNameLabel.getText());
+        screenshotShooter.captureScreenshot(driver);
     }
 
     @Test

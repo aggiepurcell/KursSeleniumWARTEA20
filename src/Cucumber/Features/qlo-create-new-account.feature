@@ -10,5 +10,5 @@ Feature: Account creation
     Then success message appears
 
     Examples:
-    |email          |
+    |email            |
     |janek22@mail.com |
