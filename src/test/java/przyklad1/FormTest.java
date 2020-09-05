@@ -1,5 +1,9 @@
 package przyklad1;
 
+//import org.apache.commons.io.IOUtils;
+
+import helpers.ScreenshotShooter;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.By;
@@ -7,13 +11,16 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.Select;
-import static org.junit.Assert.*;
 
 import java.util.List;
+
+import static org.junit.Assert.*;
 
 public class FormTest {
 
     private WebDriver driver;
+
+    private ScreenshotShooter screenshotShooter = new ScreenshotShooter();
 
     @Before
     public void setUp() {
@@ -25,6 +32,11 @@ public class FormTest {
         driver.manage().window().maximize();
 
         driver.get("https://katalon-test.s3.amazonaws.com/demo-aut/dist/html/form.html");
+    }
+
+    @After
+    public void tearDown() {
+        driver.quit();
     }
 
     @Test
@@ -101,6 +113,23 @@ public class FormTest {
 
         Select roles = new Select(driver.findElement(By.id("role")));
         roles.selectByVisibleText("QA");
+
+        screenshotShooter.captureScreenshot(driver);
+
+//        File source_file = ((TakesScreenshot)driver).getScreenshotAs(OutputType.FILE);
+//        try {
+//            FileUtils.copyFile(source_file, new File("src/Screenshots/" + screenshotName ));
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+
+//        File source_file = ((TakesScreenshot)driver).getScreenshotAs(OutputType.FILE);
+//        try {
+//            FileUtils.copyFile(source_file, new File("path/scrsht.png"));
+//            //FileUtils.copyFile(source_file, new File("C:/new_temp/scrsht.png"));
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
     }
 
     @Test
